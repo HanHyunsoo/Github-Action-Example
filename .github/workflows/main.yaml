@@ -4,6 +4,7 @@ on: push
 
 env:
   GLOBAL_LEVEL: "This value comes from the JOB level"
+  PRESET_VALUE: "This value is preset value"
 
 jobs:
   first-job:
@@ -39,6 +40,28 @@ jobs:
         echo "Job Level 2: ${{ env.JOB_LEVEL_2 }}"
         echo "Step Level 1: ${{ env.STEP_LEVEL_1 }}"
         echo "Step Level 2: ${{ env.STEP_LEVEL_2 }}"
+
+    - name: Set envirment variable 1
+      shell: bash
+      run: |
+        echo "STEP_LEVEL_1=This is the value 1 set in the step" >> $GITHUB_ENV
+
+    - name: Set envirment variable 1
+      shell: pwsh
+      run: |
+        echo "STEP_LEVEL_2=This is the value 2 set in the step" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+    - name: Get environment variables in PowerShell
+      shell: pwsh
+      run: |
+        echo "Value 1: $env:STEP_LEVEL_1"
+        echo "Value 2: $env:STEP_LEVEL_2"
+    
+    - name: Get environment variables in Bash
+      shell: bash
+      run: |
+        echo "Value 1: $STEP_LEVEL_1"
+        echo "Value 2: $STEP_LEVEL_2"
 
   second-job:
     name: 'Second Job'
