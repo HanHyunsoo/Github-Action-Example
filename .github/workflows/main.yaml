@@ -75,6 +75,11 @@ jobs:
       shell: bash
       run: |
         echo "The value of the first output is: ${{ steps.swm.outputs.april06 }}"
+    
+    - name: Get secret value
+      shell: bash
+      run: |
+        echo "My secret value is: ${{ secrets.MY_SECRET }}"
 
   second-job:
     name: 'Second Job'
